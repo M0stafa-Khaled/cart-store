@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/main.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "headers": {
+        "Access-Control-Allow-Origin": "http://cart-store-web.vercel.app",
+        "Access-Control-Allow-Methods": "GET,PATCH,POST,DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, x-refresh-token, Stripe-Signature",
+        "Access-Control-Allow-Credentials": "true"
+      },
+      "continue": true
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/main.ts"
+    }
+  ]
+}

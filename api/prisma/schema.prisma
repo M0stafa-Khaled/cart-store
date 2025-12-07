@@ -1,0 +1,261 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model User {
+  id                 String              @id @default(uuid()) @db.Uuid
+  email              String              @unique
+  name               String              @db.VarChar(255)
+  password           String
+  role               Role                @default(USER)
+  phone              String?
+  avatar             String?
+  gender             Gender
+  active             Boolean             @default(true)
+  isVerified         Boolean             @default(false)
+  refreshToken       String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  verificationTokens VerificationToken[]
+  reviews            Review[]
+  carts              Cart[]
+  orders             Order[]
+  shippingAddresses  ShippingAddress[]
+}
+
+enum VerificationType {
+  RESET_PASSWORD
+  EMAIL_VERIFICATION
+  TWO_FACTOR
+}
+
+model VerificationToken {
+  id        String           @id @default(uuid()) @db.Uuid
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String           @db.Uuid
+  token     String
+  type      VerificationType
+  expiresAt DateTime
+  used      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model Category {
+  id            String        @id @default(uuid()) @db.Uuid
+  name          String        @unique @db.VarChar(255)
+  image         String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  subCategories SubCategory[]
+  products      Product[]
+}
+
+model SubCategory {
+  id         String    @id @default(uuid()) @db.Uuid
+  name       String    @unique @db.VarChar(255)
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String    @db.Uuid
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Brand {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String    @unique @db.VarChar(255)
+  image     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model Coupon {
+  id            String        @id @default(uuid()) @db.Uuid
+  code          String        @unique
+  discountType  DiscountType?
+  discountValue Float?        @default(0)
+  maxUsage      Int
+  usedCount     Int           @default(0)
+  minOrderValue Float?
+  expiredAt     DateTime
+  isActive      Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  carts         Cart[]
+  orders        Order[]
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
+}
+
+model Cart {
+  id         String     @id @default(uuid()) @db.Uuid
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String     @unique @db.Uuid
+  cartItems  CartItem[] // list of products
+  subTotal   Float      @default(0) // price before discount
+  discount   Float      @default(0) // calculate discount
+  totalPrice Float      @default(0) // final price after discount
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  coupon     Coupon?    @relation(fields: [couponId], references: [id])
+  couponId   String?    @db.Uuid
+}
+
+model CartItem {
+  id        String  @id @default(uuid()) @db.Uuid
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    String  @db.Uuid
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String  @db.Uuid
+  price     Float // unit price at the time added
+  quantity  Int     @default(1)
+  color     String?
+  size      String?
+  total     Float   @default(0) // quantity * price
+}
+
+model Product {
+  id                 String        @id @default(uuid()) @db.Uuid
+  title              String        @unique @db.VarChar(255)
+  description        String
+  stock              Int           @default(0)
+  imageCover         String
+  images             String[]      @default([])
+  price              Float         @default(0)
+  priceAfterDiscount Float         @default(0)
+  discountType       DiscountType?
+  discountValue      Float?        @default(0)
+  sold               Int           @default(0)
+  colors             String[]      @default([])
+  sizes              String[]      @default([])
+  category           Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId         String        @db.Uuid
+  subCategory        SubCategory   @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
+  subCategoryId      String        @db.Uuid
+  brand              Brand         @relation(fields: [brandId], references: [id], onDelete: Restrict)
+  brandId            String        @db.Uuid
+  ratingAverage      Float?        @default(0)
+  ratingQuantity     Int           @default(0)
+  reviews            Review[]
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  cartItems          CartItem[]
+  orderItems         OrderItem[]
+}
+
+model Review {
+  id         String   @id @default(uuid()) @db.Uuid
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String   @db.Uuid
+  reviewText String
+  rating     Int
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId  String   @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model ShippingAddress {
+  id        String   @id @default(uuid()) @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid
+  address   String
+  city      City     @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  cityId    String   @db.Uuid
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model City {
+  id              String            @id @default(uuid()) @db.Uuid
+  name            String            @unique
+  country         Country           @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  countryId       String            @db.Uuid
+  shippingPrice   Float
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  ShippingAddress ShippingAddress[]
+}
+
+model Country {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  cities    City[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id              String        @id @default(uuid()) @db.Uuid
+  orderNumber     String        @unique
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String        @db.Uuid
+  paymentMethod   PaymentMethod
+  paymentStatus   PaymentStatus @default(PENDING)
+  discount        Float         @default(0)
+  coupon          Coupon?       @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  couponId        String?       @db.Uuid
+  shippingAddress Json
+  shippingCost    Float         @default(0)
+  subTotal        Float         @default(0)
+  totalPrice      Float         @default(0)
+  orderItems      OrderItem[]
+  status          OrderStatus   @default(PENDING)
+  isPaid          Boolean       @default(false)
+  isDelivered     Boolean       @default(false)
+  deliveredAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(uuid()) @db.Uuid
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String   @db.Uuid
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String   @db.Uuid
+  price     Float
+  quantity  Int      @default(1)
+  color     String?
+  size      String?
+  total     Float    @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CASH
+  CREDIT_CARD
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
