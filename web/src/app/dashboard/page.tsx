@@ -27,34 +27,16 @@ import {
 import SummaryCard from "./_components/summary-card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
+import ErrorRes from "@/components/shared/error";
 
 const DashboardPage = async () => {
-  const response = await getDashboardStatsAction();
+  const res = await getDashboardStatsAction();
 
-  if (!response.success || !response.data) {
-    return (
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          <p className="text-muted-foreground">
-            Welcome to your store dashboard
-          </p>
-        </div>
-        <Card className="p-8">
-          <div className="text-center text-muted-foreground">
-            <p className="text-lg font-semibold mb-2">
-              Failed to load dashboard stats
-            </p>
-            <p className="text-sm">
-              {response.message || "Please try again later"}
-            </p>
-          </div>
-        </Card>
-      </div>
-    );
+  if (!res.success || !res.data || res.error) {
+    return <ErrorRes error={res} />;
   }
 
-  const { summary, period } = response.data;
+  const { summary, period } = res.data;
 
   return (
     <div className="space-y-6">
@@ -161,7 +143,7 @@ const DashboardPage = async () => {
             Recent Users
           </CardTitle>
           <CardDescription>
-            List 5 recent users registered in the store
+            Last 5 recent users registered in the store
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">

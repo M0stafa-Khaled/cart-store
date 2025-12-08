@@ -13,7 +13,6 @@ import {
   LogIn,
   LogOut,
   Package,
-  Settings,
   User as UserIcon,
   UserPlus,
 } from "lucide-react";
@@ -75,12 +74,6 @@ const UserMenu = ({
             <Link href="/profile/my-orders" className="cursor-pointer">
               <Package className="mr-2 h-4 w-4" />
               My Orders
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/settings" className="cursor-pointer">
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
             </Link>
           </DropdownMenuItem>
           {user?.role === "ADMIN" && (

@@ -42,8 +42,8 @@ export const generateMetadata = async ({
       sp.minPrice && sp.maxPrice
         ? `${sp.minPrice} - ${sp.maxPrice} EGP`
         : sp.minPrice
-          ? `from ${sp.minPrice} EGP`
-          : `up to ${sp.maxPrice} EGP`;
+        ? `from ${sp.minPrice} EGP`
+        : `up to ${sp.maxPrice} EGP`;
     description += ` Price range: ${priceRange}.`;
   }
 

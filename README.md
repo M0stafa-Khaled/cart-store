@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="apps/web/public/logo.png" alt="Cart Store Logo" width="120">
+  <img src="web/public/logo.png" alt="Cart Store Logo" width="120">
   <h1>Cart Store</h1>
   <p><strong>Modern E-commerce Solution</strong></p>
 </div>
@@ -8,7 +8,7 @@ A high-performance, full-featured e-commerce platform built with a modern techno
 
 ## 🚀 Tech Stack
 
-### Frontend (`apps/web`)
+### Frontend (`web`)
 
 ![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
@@ -20,7 +20,7 @@ A high-performance, full-featured e-commerce platform built with a modern techno
 ![Auth.js](https://img.shields.io/badge/Auth.js-purple?style=for-the-badge)
 ![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
 
-### Backend (`apps/api`)
+### Backend (`api`)
 
 ![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
@@ -76,7 +76,6 @@ A high-performance, full-featured e-commerce platform built with a modern techno
 
 ### Prerequisites
 *   Node.js (v18 or higher)
-*   pnpm (`npm install -g pnpm`)
 *   PostgreSQL Database
 
 ### 1. Clone the repository
@@ -105,7 +104,7 @@ Create a `.env` file in `api` based on `.env.example`:
 # Application
 NODE_ENV=development
 PORT=3001
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:3000
 
 # Database
 DATABASE_URL="postgresql://user:password@localhost:5432/cart_store?schema=public"
@@ -128,6 +127,7 @@ CLOUDINARY_API_KEY="your-api-key"
 CLOUDINARY_API_SECRET="your-api-secret"
 
 # Stripe
+STRIPE_PUBLISH_KEY="pk_test_..."
 STRIPE_SECRET_KEY="sk_test_..."
 STRIPE_WEBHOOK_SECRET="whsec_..."
 ```
@@ -137,13 +137,13 @@ Create a `.env` file in `web` based on `.env.example`:
 ```env
 # Application
 NODE_ENV=development
-NEXT_PUBLIC_APP_URL=http://localhost:5173
+NEXT_PUBLIC_APP_URL=http://localhost:300
 
 # Backend API URL
 NEXT_PUBLIC_API_URL=http://localhost:5000
 
 # NextAuth
-NEXTAUTH_URL=http://localhost:5173
+NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET="next-auth-secret-key"
 AUTH_TRUST_HOST=true
 
@@ -155,9 +155,9 @@ Initialize the database using Prisma:
 ```bash
 # Navigate to the api directory or run from root using filter
 cd api
-pnpm run db:generate
-pnpm run db:migrate
-pnpm run db:seed # Optional: Seed initial data
+npm run db:generate
+npm run db:migrate
+npm run db:seed # Optional: Seed initial data
 ```
 
 ### 6. Running the Application
@@ -168,10 +168,10 @@ Run the frontend and backend applications:
 npm run dev
 
 # From the api directory
-npm run dev
+npm run start:dev
 ```
 
-*   **Frontend**: http://localhost:5173
+*   **Frontend**: http://localhost:3000
 *   **Backend API**: http://localhost:5000 (NestJS default) -> *Note: Check your specific port configuration.*
 
 ---
