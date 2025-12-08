@@ -51,7 +51,7 @@ const ANIMATION_CONFIG = {
 } as const;
 
 const toCssLength = (value?: number | string): string | undefined =>
-  typeof value === "number" ? `${value}px` : (value ?? undefined);
+  typeof value === "number" ? `${value}px` : value ?? undefined;
 
 const cx = (...parts: Array<string | false | null | undefined>) =>
   parts.filter(Boolean).join(" ");
@@ -320,7 +320,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           "--logoloop-gap": `${gap}px`,
           "--logoloop-logoHeight": `${logoHeight}px`,
           ...(fadeOutColor && { "--logoloop-fadeColor": fadeOutColor }),
-        }) as React.CSSProperties,
+        } as React.CSSProperties),
       [gap, logoHeight, fadeOutColor]
     );
 
@@ -403,8 +403,8 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         );
 
         const itemAriaLabel = isNodeItem
-          ? (item.ariaLabel ?? item.title)
-          : (item.alt ?? item.title);
+          ? item.ariaLabel ?? item.title
+          : item.alt ?? item.title;
 
         const inner = item.href ? (
           <a
@@ -421,23 +421,15 @@ export const LogoLoop = React.memo<LogoLoopProps>(
             rel="noreferrer noopener"
           >
             {content}
-            <span className="absolute left-1/2 -translate-x-1/2 bottom-[calc(var(--logoloop-logoHeight)*0.5)] text-2xl text-center font-bold capitalize text-main group-hover/logo:opacity-100 opacity-0 transition-all duration-500">
-              {item.title}
-            </span>
           </a>
         ) : (
-          <>
-            {content}
-            <span className="absolute left-1/2 -translate-x-1/2 bottom-[calc(var(--logoloop-logoHeight)*0.5)] text-2xl text-center font-bold capitalize text-main group-hover/logo:opacity-100 opacity-0 transition-all duration-500">
-              {item.title}
-            </span>
-          </>
+          content
         );
 
         return (
           <li
             className={cx(
-              "flex-none text-(length:--logoloop-logoHeight) leading-none relative group/logo",
+              "flex items-center justify-center text-(length:--logoloop-logoHeight) leading-none relative group/logo",
               isVertical ? "mb-(--logoloop-gap)" : "mr-(--logoloop-gap)",
               scaleOnHover && "overflow-visible group/item"
             )}
@@ -475,7 +467,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           ? toCssLength(width) === "100%"
             ? undefined
             : toCssLength(width)
-          : (toCssLength(width) ?? "100%"),
+          : toCssLength(width) ?? "100%",
         ...cssVariables,
         ...style,
       }),

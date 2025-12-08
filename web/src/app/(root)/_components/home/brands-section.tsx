@@ -5,11 +5,7 @@ import { IBrand } from "@/interfaces";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export const BrandsSection = ({
-  brands,
-}: {
-  brands: IBrand[];
-}) => {
+export const BrandsSection = ({ brands }: { brands: IBrand[] }) => {
   return (
     <section className="py-16 bg-white">
       <motion.div
@@ -35,8 +31,10 @@ export const BrandsSection = ({
               <Image
                 src={brand.image}
                 alt={brand.name}
-                width={200}
-                height={200}
+                className="object-contain object-center"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                width={100}
+                height={100}
               />
             ),
             href: `/shop/products?brand=${brand.name}`,
@@ -45,8 +43,9 @@ export const BrandsSection = ({
           }))}
           speed={100}
           direction="left"
-          logoHeight={128}
+          logoHeight={100}
           gap={40}
+          pauseOnHover
           hoverSpeed={0}
           scaleOnHover
           fadeOut

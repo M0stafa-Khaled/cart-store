@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -23,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Loader from "@/components/ui/loader";
 import {
   Select,
   SelectContent,
@@ -34,7 +36,7 @@ import { Switch } from "@/components/ui/switch";
 import { APIRes, ICoupon } from "@/interfaces/index";
 import { handleActionError } from "@/lib/error-handlers";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -77,8 +79,6 @@ const CouponDialog = ({
       isActive: coupon?.isActive || false,
     },
   });
-
-  const { isSubmitting } = form.formState;
 
   const onSubmit = async (values: CouponForm) => {
     try {
@@ -245,11 +245,28 @@ const CouponDialog = ({
             />
 
             <DialogFooter>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <DialogClose asChild disabled={form.formState.isSubmitting}>
+                <Button type="button" className="bg-black/70 hover:bg-black/60">
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                className="bg-main hover:bg-main"
+              >
+                {form.formState.isSubmitting ? (
+                  <>
+                    <Loader size={15} color="white" />
+                    <span className="mx-2">
+                      {isEdit ? "Updating" : "Creating"}...
+                    </span>
+                  </>
+                ) : isEdit ? (
+                  "Update"
+                ) : (
+                  "Create"
                 )}
-                {isEdit ? "Update" : "Create"} Coupon
               </Button>
             </DialogFooter>
           </form>

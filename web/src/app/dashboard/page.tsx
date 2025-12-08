@@ -98,6 +98,7 @@ const DashboardPage = async () => {
           title="Reviews"
           description="Total customer reviews"
           icon={<Star className="h-4 w-4 text-yellow-500" />}
+          href="/dashboard/reviews"
         />
 
         <SummaryCard
@@ -105,6 +106,7 @@ const DashboardPage = async () => {
           title="Categories"
           description="Active categories"
           icon={<FolderTree className="h-4 w-4 text-blue-500" />}
+          href="/dashboard/categories"
         />
 
         <SummaryCard
@@ -112,6 +114,7 @@ const DashboardPage = async () => {
           title="Sub-Categories"
           description="Active sub-categories"
           icon={<Grid3x3 className="h-4 w-4 text-indigo-500" />}
+          href="/dashboard/sub-categories"
         />
 
         <SummaryCard
@@ -119,6 +122,7 @@ const DashboardPage = async () => {
           title="Brands"
           description="Partner brands"
           icon={<Tag className="h-4 w-4 text-pink-500" />}
+          href="/dashboard/brands"
         />
 
         <SummaryCard
@@ -126,6 +130,7 @@ const DashboardPage = async () => {
           title="Coupons"
           description="Created coupons"
           icon={<Ticket className="h-4 w-4 text-red-500" />}
+          href="/dashboard/coupons"
         />
 
         <SummaryCard
@@ -133,6 +138,7 @@ const DashboardPage = async () => {
           title="Active Users"
           description="Users with active status"
           icon={<UserCheck className="h-4 w-4 text-green-500" />}
+          href="/dashboard/users"
         />
       </div>
 

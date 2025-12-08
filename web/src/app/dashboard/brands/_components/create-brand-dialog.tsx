@@ -193,7 +193,7 @@ const CreateBrandDialog = () => {
             />
 
             <DialogFooter>
-              <DialogClose asChild>
+              <DialogClose asChild disabled={form.formState.isSubmitting}>
                 <Button type="button" className="bg-black/70 hover:bg-black/60">
                   Cancel
                 </Button>
@@ -201,15 +201,15 @@ const CreateBrandDialog = () => {
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
-                className="bg-main hover:bg-main/90"
+                className="bg-main hover:bg-main"
               >
                 {form.formState.isSubmitting ? (
                   <>
                     <Loader size={15} color="white" />
-                    <span className="mx-2">Saving...</span>
+                    <span className="mx-2">Creating...</span>
                   </>
                 ) : (
-                  "Save"
+                  "Create"
                 )}
               </Button>
             </DialogFooter>

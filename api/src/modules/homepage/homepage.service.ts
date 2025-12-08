@@ -42,11 +42,16 @@ export class HomepageService {
       data: await this.prisma.category.findMany({
         take: 8,
         include: {
+          products: true,
           _count: {
             select: { products: true },
           },
         },
-        orderBy: { createdAt: "desc" },
+        orderBy: {
+          products: {
+            _count: "desc",
+          },
+        },
       }),
     };
   }
@@ -121,7 +126,11 @@ export class HomepageService {
             select: { products: true },
           },
         },
-        orderBy: { createdAt: "desc" },
+        orderBy: {
+          products: {
+            _count: "desc",
+          },
+        },
       }),
     };
   }

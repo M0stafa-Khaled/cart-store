@@ -205,7 +205,7 @@ const UpdateBrandDialog = ({
             />
 
             <DialogFooter>
-              <DialogClose asChild>
+              <DialogClose asChild disabled={form.formState.isSubmitting}>
                 <Button type="button" className="bg-black/70 hover:bg-black/60">
                   Cancel
                 </Button>
@@ -213,7 +213,7 @@ const UpdateBrandDialog = ({
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
-                className="bg-main hover:bg-main/90"
+                className="bg-main hover:bg-main"
               >
                 {form.formState.isSubmitting ? (
                   <>

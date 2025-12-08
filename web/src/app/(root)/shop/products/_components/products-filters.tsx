@@ -85,7 +85,7 @@ const ProductsFilters = ({
         (sub) =>
           sub.category.name.toLowerCase() === filters.category?.toLowerCase()
       )
-    : subCategories;
+    : subCategories.slice(0, 15);
 
   const filtersContent = (
     <div className="space-y-6">
@@ -123,7 +123,7 @@ const ProductsFilters = ({
         </button>
         {expandedSections.category && (
           <div className="space-y-2 pl-1">
-            {categories.map((category) => (
+            {categories.slice(0, 10).map((category) => (
               <button
                 key={category.id}
                 onClick={() =>
@@ -216,7 +216,7 @@ const ProductsFilters = ({
         {expandedSections.brand && (
           <ScrollArea>
             <div className="space-y-2 pl-1 pr-4">
-              {brands.map((brand) => (
+              {brands.slice(0, 10).map((brand) => (
                 <button
                   key={brand.id}
                   onClick={() =>

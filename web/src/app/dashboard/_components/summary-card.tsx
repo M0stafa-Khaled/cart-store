@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 import { ReactNode } from "react";
 
 const SummaryCard = ({
@@ -6,16 +7,20 @@ const SummaryCard = ({
   icon: Icon,
   title,
   description,
+  href,
 }: {
   value: number;
   icon: ReactNode;
   title: string;
   description: string;
+  href: string;
 }) => {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <CardTitle className="text-sm font-medium hover:text-main">
+          <Link href={href}>{title}</Link>
+        </CardTitle>
         {Icon}
       </CardHeader>
       <CardContent>

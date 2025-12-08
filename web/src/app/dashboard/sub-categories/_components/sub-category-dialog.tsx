@@ -79,6 +79,7 @@ const SubCategoryDialog = ({
       if (!res.success) throw res;
 
       toast.success(res.message);
+      form.reset()
       setOpen(false);
     } catch (error) {
       handleActionError(error as APIRes);
@@ -162,7 +163,7 @@ const SubCategoryDialog = ({
             />
 
             <DialogFooter>
-              <DialogClose asChild>
+              <DialogClose asChild disabled={form.formState.isSubmitting}>
                 <Button type="button" className="bg-black/70 hover:bg-black/60">
                   Cancel
                 </Button>

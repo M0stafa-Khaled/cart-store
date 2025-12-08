@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Loader from "@/components/ui/loader";
 import { APIRes, ICategory } from "@/interfaces/index";
 import { handleActionError } from "@/lib/error-handlers";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,7 +31,6 @@ import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import Loader from "@/components/ui/loader";
 
 const updateCategorySchema = z.object({
   name: z.string().min(3, { message: "Name must be at least 3 characters" }),
@@ -205,7 +205,7 @@ const UpdateCategoryDialog = ({
             />
 
             <DialogFooter>
-              <DialogClose asChild>
+              <DialogClose asChild disabled={form.formState.isSubmitting}>
                 <Button type="button" className="bg-black/70 hover:bg-black/60">
                   Cancel
                 </Button>
@@ -213,7 +213,7 @@ const UpdateCategoryDialog = ({
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
-                className="bg-mainver:bg-main"
+                className="bg-main hover:bg-main"
               >
                 {form.formState.isSubmitting ? (
                   <>
