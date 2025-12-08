@@ -11,6 +11,8 @@ import {
   PointElement,
   LineElement,
   Filler,
+  BarController,
+  LineController,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { formatEGPPrice } from "@/utils/formatPrice";
@@ -24,7 +26,9 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
+  BarController,
+  LineController
 );
 
 interface ChartData {
