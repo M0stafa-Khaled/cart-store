@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { useSession } from "@/hooks/use-session";
 import { APIRes, IUser } from "@/interfaces";
 import { handleActionError } from "@/lib/error-handlers";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,6 +40,7 @@ import {
   User,
   UserCheck,
 } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -61,6 +63,7 @@ const getUserSchema = (isEdit: boolean) =>
   });
 
 const UserForm = ({ user }: { user?: IUser }) => {
+  const { user: sessionUser } = useSession();
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState<string | null>(
     user?.avatar || null
@@ -106,7 +109,17 @@ const UserForm = ({ user }: { user?: IUser }) => {
 
       if (!res.success) throw res;
 
-      toast.success(res.message);
+      toast.success(
+        sessionUser?.id === user?.id
+          ? "Profile updated successfully, please sign in again"
+          : res.message
+      );
+      if (isEdit && user && sessionUser?.id === user.id) {
+        await signOut({
+          redirectTo: "/auth/sign-in",
+          redirect: true,
+        });
+      }
       return router.push("/dashboard/users");
     } catch (error) {
       handleActionError(error as APIRes);
@@ -261,7 +274,7 @@ const UserForm = ({ user }: { user?: IUser }) => {
                         <div className="relative">
                           <Mail className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                           <Input
-                            placeholder="example@example.com"  
+                            placeholder="example@example.com"
                             className="pl-9"
                             {...field}
                           />

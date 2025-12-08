@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Star, Edit, Trash2, MessageSquarePlus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { IReview } from "@/interfaces";
 import { useSession } from "@/hooks/use-session";
@@ -24,6 +24,7 @@ import {
 import { handleActionError } from "@/lib/error-handlers";
 import RatingDistribution from "./rating-distribution";
 import UserReviewInfo from "./user-review-info";
+import Image from "next/image";
 
 interface ProductReviewsProps {
   reviews: IReview[];
@@ -183,10 +184,19 @@ const ProductReviews = ({
               >
                 <div className="flex items-start gap-4">
                   <Avatar className="h-12 w-12">
-                    <AvatarImage src={review.user.avatar || undefined} />
-                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                      {getInitials(review.user.name)}
-                    </AvatarFallback>
+                    {review.user.avatar ? (
+                      <Image
+                        src={review.user.avatar}
+                        alt={review.user.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover object-top"
+                      />
+                    ) : (
+                      <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                        {getInitials(review.user.name)}
+                      </AvatarFallback>
+                    )}
                   </Avatar>
 
                   <div className="flex-1">

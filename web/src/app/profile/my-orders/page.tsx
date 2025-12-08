@@ -6,11 +6,12 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate } from "@/utils/formatDate";
 import { getOrderStatus } from "@/app/dashboard/orders/_components/statuses";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { formatEGPPrice } from "@/utils/formatPrice";
 import { Separator } from "@/components/ui/separator";
 import { MyOrdersWidgets } from "./_components/my-orders-widgets";
 import ErrorRes from "@/components/shared/error";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "My Orders",
@@ -131,13 +132,19 @@ const MyOrdersPage = async () => {
                         className="flex items-center gap-3 p-2 rounded-md bg-accent/50"
                       >
                         <Avatar className="h-12 w-12 rounded-md">
-                          <AvatarImage
-                            src={item.product.imageCover}
-                            alt={item.product.title}
-                          />
-                          <AvatarFallback className="rounded-md text-xs">
-                            {item.product.title.slice(0, 2).toUpperCase()}
-                          </AvatarFallback>
+                          {item.product.imageCover ? (
+                            <Image
+                              src={item.product.imageCover}
+                              alt={item.product.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              className="object-cover object-top"
+                            />
+                          ) : (
+                            <AvatarFallback className="rounded-md text-xs">
+                              {item.product.title.slice(0, 2).toUpperCase()}
+                            </AvatarFallback>
+                          )}
                         </Avatar>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium truncate">

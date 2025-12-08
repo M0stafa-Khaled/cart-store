@@ -23,9 +23,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/utils/formatDate";
 import { formatEGPPrice } from "@/utils/formatPrice";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getOrderStatus } from "./statuses";
 import { UpdateOrderDialog } from "./update-order-dialog";
+import Image from "next/image";
 
 export const useOrdersColumns = (): ColumnDef<IOrder>[] => {
   const router = useRouter();
@@ -60,13 +61,19 @@ export const useOrdersColumns = (): ColumnDef<IOrder>[] => {
           <div className="flex -space-x-2">
             {row.orderItems.slice(0, 3).map((item, idx) => (
               <Avatar key={idx} className="h-8 w-8 border-2 border-background">
-                <AvatarImage
-                  src={item.product.imageCover}
-                  alt={item.product.title}
-                />
-                <AvatarFallback className="text-xs">
-                  {item.product.title.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
+                {item.product.imageCover ? (
+                  <Image
+                    src={item.product.imageCover}
+                    alt={item.product.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover object-top"
+                  />
+                ) : (
+                  <AvatarFallback className="text-xs">
+                    {item.product.title.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                )}
               </Avatar>
             ))}
           </div>

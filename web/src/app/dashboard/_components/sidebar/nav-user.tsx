@@ -1,7 +1,7 @@
 "use client";
 
 import { BadgeCheck, ChevronsUpDown, Home, LogOut } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSignOut } from "@/hooks/use-signout";
+import Image from "next/image";
 
 export const NavUser = () => {
   const { isMobile } = useSidebar();
@@ -58,16 +59,22 @@ export const NavUser = () => {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage
-                  src={session?.user?.avatar || "/user-placeholder.png"}
-                  alt={session?.user?.name || "user"}
-                />
-                <AvatarFallback className="rounded-lg">
-                  {session?.user?.name
-                    ?.split(" ")
-                    .map((name) => name[0].toUpperCase())
-                    .join("")}
-                </AvatarFallback>
+                {session?.user?.avatar ? (
+                  <Image
+                    src={session?.user.avatar}
+                    alt={session?.user.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover object-top"
+                  />
+                ) : (
+                  <AvatarFallback>
+                    {session?.user?.name
+                      .split(" ")
+                      .map((name) => name[0])
+                      .join("")}
+                  </AvatarFallback>
+                )}
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
@@ -87,16 +94,22 @@ export const NavUser = () => {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage
-                    src={session?.user?.avatar || "/user-placeholder.png"}
-                    alt={session?.user?.name || "user"}
-                  />
-                  <AvatarFallback className="rounded-lg">
-                    {session?.user?.name
-                      ?.split(" ")
-                      .map((name) => name[0])
-                      .join("")}
-                  </AvatarFallback>
+                  {session?.user?.avatar ? (
+                    <Image
+                      src={session?.user.avatar}
+                      alt={session?.user.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover object-top"
+                    />
+                  ) : (
+                    <AvatarFallback className="rounded-lg">
+                      {session?.user?.name
+                        ?.split(" ")
+                        .map((name) => name[0])
+                        .join("")}
+                    </AvatarFallback>
+                  )}
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">

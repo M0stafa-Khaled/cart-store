@@ -6,7 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
@@ -21,6 +21,7 @@ import Link from "next/link";
 import { IUser } from "@/interfaces";
 import { useSignOut } from "@/hooks/use-signout";
 import { User } from "next-auth";
+import Image from "next/image";
 
 const UserMenu = ({
   isAuthenticated,
@@ -37,16 +38,22 @@ const UserMenu = ({
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="rounded-full">
             <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={user?.avatar || undefined}
-                className="object-cover"
-              />
-              <AvatarFallback>
-                {user?.name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </AvatarFallback>
+              {user?.avatar ? (
+                <Image
+                  src={user.avatar}
+                  alt={user.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover object-top"
+                />
+              ) : (
+                <AvatarFallback>
+                  {user?.name
+                    .split(" ")
+                    .map((name) => name[0])
+                    .join("")}
+                </AvatarFallback>
+              )}
             </Avatar>
           </Button>
         </DropdownMenuTrigger>

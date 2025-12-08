@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { IProduct } from "@/interfaces";
-import { AvatarImage } from "@radix-ui/react-avatar";
 import { Star, Trash2 } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 const DashboardProductReviews = ({
@@ -72,10 +72,19 @@ const DashboardProductReviews = ({
           >
             <div className="flex items-start gap-4">
               <Avatar className="h-12 w-12">
-                <AvatarImage src={review.user.avatar || undefined} />
-                <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                  {getInitials(review.user.name)}
-                </AvatarFallback>
+                {review.user.avatar ? (
+                  <Image
+                    src={review.user.avatar}
+                    alt={review.user.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover object-top"
+                  />
+                ) : (
+                  <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                    {getInitials(review.user.name)}
+                  </AvatarFallback>
+                )}
               </Avatar>
 
               <div className="flex-1">
