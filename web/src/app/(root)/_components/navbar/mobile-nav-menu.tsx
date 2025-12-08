@@ -54,7 +54,7 @@ const MobileNavMenu = ({
                 Sign In
               </Link>
             </Button>
-            <Button className="w-full" asChild>
+            <Button className="w-full bg-main hover:bg-main/90" asChild >
               <Link href="/auth/sign-up">
                 <UserPlus className="mr-2 h-4 w-4" />
                 Sign Up

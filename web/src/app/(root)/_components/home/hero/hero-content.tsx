@@ -16,7 +16,7 @@ export const HeroContent = () => {
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="space-y-8"
+      className="space-y-6"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -58,9 +58,9 @@ export const HeroContent = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="flex flex-wrap gap-4"
+        className="flex flex-col sm:flex-row gap-4 space-y-4 sm:space-y-0"
       >
-        <motion.button whileTap={{ scale: 0.95 }}>
+        <motion.button whileTap={{ scale: 0.95 }} className="w-fit">
           <Link
             href="/shop/products"
             className="group px-8 py-4 bg-linear-to-r from-main to-rose-600 text-white font-semibold rounded-2xl shadow-xl flex items-center gap-2 transition-all hover:shadow-2xl"
@@ -71,7 +71,7 @@ export const HeroContent = () => {
           </Link>
         </motion.button>
 
-        <motion.button whileTap={{ scale: 0.95 }}>
+        <motion.button whileTap={{ scale: 0.95 }} className="w-fit">
           <Link
             href="/shop/products"
             className="px-8 py-4 bg-white text-slate-900 font-semibold rounded-2xl shadow-lg border-2 border-slate-200 hover:border-orange-300 transition-all"

@@ -18,18 +18,6 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "placehold.co",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "e-commerce-nestjs-inky.vercel.app",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
         hostname: "images.unsplash.com",
         port: "",
         pathname: "/**",
@@ -43,24 +31,13 @@ const nextConfig = {
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  // Enable compression
   compress: true,
-  // Optimize production builds
   productionBrowserSourceMaps: false,
-
   experimental: {
     serverActions: {
       bodySizeLimit: "10MB",
     },
     // globalNotFound: true,
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/api/v1/:path*",
-        destination: "https://cart-store-api-e621z0u5d-mostafa-khaled-projects.vercel.app/api/v1/:path*",
-      },
-    ];
   },
   turbopack: {
     root: path.join(__dirname, "..", ".."),

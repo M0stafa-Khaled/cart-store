@@ -30,9 +30,8 @@ async function bootstrap() {
     }),
   );
 
-  // CORS
   app.enableCors({
-    origin: [String(process.env.FRONT_END_URL)],
+    origin: [process.env.FRONTEND_URL!],
     credentials: true,
     allowedHeaders: [
       "Content-Type",
@@ -43,30 +42,7 @@ async function bootstrap() {
     methods: ["GET", "POST", "DELETE", "PATCH"],
   });
 
-  app.use(
-    (
-      req: express.Request,
-      res: express.Response,
-      next: express.NextFunction,
-    ) => {
-      if (req.method === "OPTIONS") {
-        res.header(
-          "Access-Control-Allow-Origin",
-          String(process.env.FRONT_END_URL),
-        );
-        res.header("Access-Control-Allow-Methods", "GET,PATCH,POST,DELETE");
-        res.header(
-          "Access-Control-Allow-Headers",
-          "Content-Type, Authorization, x-refresh-token, Stripe-Signature",
-        );
-        res.header("Access-Control-Allow-Credentials", "true");
-        return res.sendStatus(204);
-      }
-      next();
-    },
-  );
-
-  await app.listen(process.env.PORT ?? 5000, "0.0.0.0");
+  await app.listen(process.env.PORT ?? 5000);
 }
 
 bootstrap()

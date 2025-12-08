@@ -3,7 +3,6 @@
 import ErrorPage from "@/components/shared/error-page";
 
 const GlobalError = ({ error }: { error: Error & { digest?: string } }) => {
-  console.log(error);
   return (
     <html>
       <body>

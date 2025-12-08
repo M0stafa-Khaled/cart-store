@@ -7,7 +7,7 @@ import { AnimatedBackground } from "./hero/animated-background";
 import { IProduct } from "@/interfaces";
 
 export const HeroSection = ({ products }: { products: IProduct[] }) => {
-  const [mousePosition, setMousePosition] = useState<{x:number; y:number}>({
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
   });
@@ -30,7 +30,7 @@ export const HeroSection = ({ products }: { products: IProduct[] }) => {
     >
       <AnimatedBackground mousePosition={mousePosition} />
 
-      <div className="relative z-10 container pt-10 pb-20 lg:pt-20 lg:pb-32">
+      <div className="relative z-10 container pt-6 pb-20 lg:pt-16 lg:pb-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <HeroContent />
           <ProductCarousel products={products} />
@@ -39,4 +39,3 @@ export const HeroSection = ({ products }: { products: IProduct[] }) => {
     </section>
   );
 };
-

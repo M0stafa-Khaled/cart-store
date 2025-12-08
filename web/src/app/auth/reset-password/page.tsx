@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState,  } from "react";
+import { useEffect, useState } from "react";
 import z from "zod";
 import {
   Card,
@@ -30,8 +30,7 @@ import Link from "next/link";
 import Loader from "@/components/ui/loader";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { APIRes } from "@/interfaces";
-import { handleResErr } from "@/utils/handleResErr";
+import { handleActionError } from "@/lib/error-handlers";
 import { resetPasswordAction } from "@/actions/auth.actions";
 
 const resetPasswordSchema = z.object({
@@ -63,12 +62,12 @@ const ResetPasswordPage = () => {
   const onSubmit = async (data: ResetPasswordForm) => {
     try {
       const res = await resetPasswordAction(data);
+      if (!res.success) throw res;
       toast.success(res.message);
       localStorage.removeItem("canResetPassword");
       router.push("/sign-in");
     } catch (error) {
-      const apiError = error as APIRes;
-      handleResErr(apiError);
+      handleActionError(error);
     }
   };
 

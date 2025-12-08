@@ -1,7 +1,6 @@
 "use client";
 
 import { APIRes } from "@/interfaces";
-import { handleResErr } from "@/utils/handleResErr";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -42,6 +41,7 @@ import {
 import Link from "next/link";
 import Loader from "@/components/ui/loader";
 import { signUpAction } from "@/actions/auth.actions";
+import { handleActionError } from "@/lib/error-handlers";
 
 const signUpSchema = z.object({
   name: z
@@ -102,7 +102,7 @@ const SignUpPage = () => {
         apiError.message || "An unexpected error occurred. Please try again."
       );
 
-      handleResErr(apiError);
+      handleActionError(apiError);
     } finally {
       setIsLoading(false);
     }

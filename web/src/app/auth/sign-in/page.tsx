@@ -187,7 +187,7 @@ const SignInPage = () => {
                 )}
               />
               <Link
-                href="/forgot-password"
+                href="/auth/forgot-password"
                 className="text-main text-sm w-full flex justify-end underline"
               >
                 forgot password?

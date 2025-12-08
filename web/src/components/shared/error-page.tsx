@@ -19,7 +19,6 @@ const ErrorPage = ({ error }: ErrorPageProps) => {
       ? "Internal Server Error"
       : error?.message;
   const code = error?.code || 500;
-  console.log(error);
   return (
     <div className="min-h-[80vh] flex items-center justify-center p-4 bg-linear-to-b from-gray-50 to-white">
       <motion.div

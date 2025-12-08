@@ -1,7 +1,5 @@
 "use client";
 
-import { APIRes } from "@/interfaces";
-import { handleResErr } from "@/utils/handleResErr";
 import z from "zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -32,8 +30,9 @@ import { Mail } from "lucide-react";
 import { toast } from "sonner";
 import Loader from "@/components/ui/loader";
 import Link from "next/link";
-import { useTransition } from "react";
+import { useState } from "react";
 import { forgotPasswordAction } from "@/actions/auth.actions";
+import { handleActionError } from "@/lib/error-handlers";
 
 const forgotPasswordSchema = z.object({
   email: z.email({ message: "Please enter a valid email" }),
@@ -43,25 +42,26 @@ export type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 
 const ForgotPasswordPage = () => {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsLoading] = useState(false);
   const form = useForm<ForgotPasswordForm>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
-      email: "mostafa6320005@gmail.com",
+      email: "",
     },
   });
 
   const onSubmit = async (data: ForgotPasswordForm) => {
+    setIsLoading(true);
     try {
-      startTransition(async () => {
-        const res = await forgotPasswordAction(data);
-        toast.success(res.message);
-        localStorage.setItem("canResetPassword", "true");
-        router.push("/reset-password");
-      });
+      const res = await forgotPasswordAction(data);
+      if (!res.success) throw res;
+      toast.success(res.message);
+      localStorage.setItem("canResetPassword", "true");
+      router.push("/auth/reset-password");
     } catch (err) {
-      const apiError = err as APIRes;
-      handleResErr(apiError);
+      handleActionError(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -116,7 +116,7 @@ const ForgotPasswordPage = () => {
             type="submit"
             form="reset-password-form"
             disabled={isPending}
-            className="h-auto py-2.5 bg-mainver:bg-bg-main cursor-pointer w-full mt-6"
+            className="h-auto py-2.5 bg-main hover:bg-main/90 cursor-pointer w-full mt-6"
           >
             {isPending ? (
               <>
