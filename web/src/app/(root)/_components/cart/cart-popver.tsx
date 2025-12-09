@@ -47,7 +47,7 @@ const CartPopver = () => {
                       alt={item.product.title}
                       width={64}
                       height={64}
-                      className="object-cover"
+                      className="object-contain object-center"
                     />
                   </div>
 

@@ -30,7 +30,9 @@ export const getAllOrdersAction = async ({
       ...(user && { user }),
     });
     const res = await apiClient.get<IPaginatedRes<IOrder>>(
-      `${API_ROUTES.ORDERS.ADMIN.MAIN}${querySearch ? `?${querySearch.toString()}` : ""}`
+      `${API_ROUTES.ORDERS.ADMIN.MAIN}${
+        querySearch ? `?${querySearch.toString()}` : ""
+      }`
     );
 
     if (!res.success) throw res;
@@ -61,7 +63,9 @@ export const getAllUserOrdersAction = async (
       ...(status && { status }),
     });
     const res = await apiClient.get<APIRes<IOrder[]>>(
-      `${API_ROUTES.ORDERS.ADMIN.USER}/${userId}${querySearch ? `?${querySearch.toString()}` : ""}`
+      `${API_ROUTES.ORDERS.ADMIN.USER}/${userId}${
+        querySearch ? `?${querySearch.toString()}` : ""
+      }`
     );
     if (!res.success) throw res;
     return res;
@@ -117,11 +121,12 @@ export const checkoutAction = async (
       `${API_ROUTES.ORDERS.USER.CHECKOUT}?success_url=${success_url}&cancel_url=${cancell_url}`,
       data
     );
-
+    console.log("res: ", res);
     if (!res.success) throw res;
     revalidatePath("/cart");
     return res;
   } catch (error) {
+    console.log("err: ", error);
     return error as APIRes;
   }
 };

@@ -39,7 +39,7 @@ const UserMenu = ({
             <Avatar className="h-8 w-8">
               {user?.avatar ? (
                 <Image
-                  src={user.avatar}
+                  src={user.avatar || "/user-placeholder.png"}
                   alt={user.name}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

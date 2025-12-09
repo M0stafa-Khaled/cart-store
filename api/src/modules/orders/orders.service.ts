@@ -88,9 +88,9 @@ export class OrdersService {
     }
 
     // Order creation process
-    const order = await this.prisma.$transaction(async (tx) => {
+    const createdOrder = await this.prisma.$transaction(async (tx) => {
       // Create a new order
-      const createdOrder = await tx.order.create({
+      const order = await tx.order.create({
         data: {
           orderNumber: "TEMP",
           userId,
@@ -122,26 +122,24 @@ export class OrdersService {
         },
         omit: { couponId: true, userId: true },
       });
-
-      const order = await this.prisma.order.update({
-        where: { id: createdOrder.id },
-        data: {
-          orderNumber: this.generateOrderNumber(createdOrder.id, userId),
-        },
-        include: {
-          coupon: true,
-          user: true,
-          orderItems: {
-            include: { product: true },
-            omit: { productId: true, orderId: true },
-          },
-        },
-        omit: { couponId: true, userId: true },
-      });
-
       return order;
     });
 
+    const order = await this.prisma.order.update({
+      where: { id: createdOrder.id },
+      data: {
+        orderNumber: this.generateOrderNumber(createdOrder.id),
+      },
+      include: {
+        coupon: true,
+        user: true,
+        orderItems: {
+          include: { product: true },
+          omit: { productId: true, orderId: true },
+        },
+      },
+      omit: { couponId: true, userId: true },
+    });
     // If payment method is CASH, delete cart items and update cart
     if (createOrderDto.paymentMethod === "CASH") {
       await this.prisma.cartItem.deleteMany({ where: { cartId: cart.id } });
@@ -602,7 +600,7 @@ export class OrdersService {
   /**
    * @Docs     Generate order number
    */
-  private generateOrderNumber(userId: string | number, uuid: string) {
+  private generateOrderNumber(uuid: string) {
     const d = new Date();
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -610,6 +608,6 @@ export class OrdersService {
 
     const shortUUID = uuid.replace(/-/g, "").slice(0, 8).toUpperCase();
 
-    return `ORD-${y}${m}${day}-${userId}-${shortUUID}`;
+    return `ORD-${y}${m}${day}-${shortUUID}`;
   }
 }
