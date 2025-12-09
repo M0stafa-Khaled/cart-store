@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { formatEGPPrice } from "@/utils/formatPrice";
 import Image from "next/image";
+import { truncateText } from "@/utils/truncateText";
 
 const CartPopver = () => {
   const { cartItems, itemCount, subTotal, removeFromCart } = useCart();
@@ -51,7 +52,9 @@ const CartPopver = () => {
                   </div>
 
                   <div className="flex-1">
-                    <p className="text-sm font-medium">{item.product.title}</p>
+                    <p className="text-sm font-medium">
+                      {truncateText(item.product.title, 25)}
+                    </p>
                     <p className="text-xs text-muted-foreground">
                       Qty: {item.quantity} × {formatEGPPrice(item.price)}
                     </p>

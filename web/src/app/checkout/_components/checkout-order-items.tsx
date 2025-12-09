@@ -30,7 +30,7 @@ const CheckoutOrderItems = () => {
                 alt={item.product.title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover"
+                className="object-contain object-center"
               />
             </div>
             <div className="flex-1 min-w-0">

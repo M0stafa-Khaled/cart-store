@@ -292,7 +292,7 @@ export const ShippingAddressDialog = ({
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="bg-main hvoer:bg-main"
+                className="bg-main hover:bg-main"
               >
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {isEdit ? "Update" : "Add"} Address
