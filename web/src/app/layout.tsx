@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
@@ -12,12 +11,6 @@ const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
 });
-
-export const metadata: Metadata = {
-  title: "Cart Store",
-  description:
-    "Welcome to our cart store. Find the best products at the best prices.",
-};
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (

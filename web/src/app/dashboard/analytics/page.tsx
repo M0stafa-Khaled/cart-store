@@ -132,7 +132,7 @@ const AnalyticsPage = async ({
                       src={product.imageCover}
                       alt={product.title}
                       fill
-                      className="object-cover"
+                      className="object-contain object-center"
                     />
                   </div>
                   <div className="flex-1 min-w-0">
