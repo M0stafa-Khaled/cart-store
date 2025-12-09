@@ -67,7 +67,7 @@ export const useOrdersColumns = (): ColumnDef<IOrder>[] => {
                     alt={item.product.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-top"
+                    className="object-contain object-center"
                   />
                 ) : (
                   <AvatarFallback className="text-xs">

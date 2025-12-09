@@ -138,7 +138,9 @@ export const UpdateOrderDialog = ({
                     <FormItem>
                       <FormLabel>Delivery Status</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
+                        onValueChange={(value) =>
+                          field.onChange(value === "true")
+                        }
                         defaultValue={String(field.value)}
                       >
                         <FormControl>

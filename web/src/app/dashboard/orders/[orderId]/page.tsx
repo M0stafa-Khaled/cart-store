@@ -156,13 +156,13 @@ const OrderDetailsPage = async ({ params }: OrderDetailsPageProps) => {
                   key={item.id}
                   className="flex gap-4 p-4 rounded-lg border hover:bg-muted/50 transition-colors"
                 >
-                  <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-muted">
+                  <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-white">
                     <Image
                       src={item.product.imageCover}
                       alt={item.product.title}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover"
+                      className="object-contain object-center"
                     />
                   </div>
                   <div className="flex-1 min-w-0">
