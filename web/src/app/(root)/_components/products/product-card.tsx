@@ -62,15 +62,18 @@ const Productcard = ({ product, showBadge = true }: ProductCardProps) => {
       key={product.id}
       className="group pt-0 max-w-md w-full rounded-2xl overflow-hidden mx-auto hover:shadow-xl transition-all duration-300 border-slate-200"
     >
-      <div className="relative overflow-hidden aspect-square flex items-center justify-center bg-muted cursor-pointer">
-        <Link href={`/shop/products/${product.id}`} className="absolute inset-0">
+      <div className="relative overflow-hidden aspect-square flex items-center justify-center bg-white cursor-pointer">
+        <Link
+          href={`/shop/products/${product.id}`}
+          className="absolute inset-0"
+        >
           <Image
             src={product.imageCover || "/placeholder.svg"}
             alt={product.title}
             fill
             loading="eager"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover rounded-t-lg group-hover:scale-110 transition-transform duration-300"
+            className="object-contain object-center rounded-t-lg group-hover:scale-110 transition-transform duration-300"
           />
 
           <div className="absolute top-4 left-4 flex flex-col gap-2">
@@ -81,9 +84,9 @@ const Productcard = ({ product, showBadge = true }: ProductCardProps) => {
             )}
           </div>
           <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {showBadge && product.category && (
+            {showBadge && product.brand && (
               <div className="absolute -bottom-4 opacity-0 group-hover:bottom-2 group-hover:opacity-100 transition-all duration-300 left-4 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                {product.category.name}
+                {product.brand.name}
               </div>
             )}
           </div>

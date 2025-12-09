@@ -14,7 +14,7 @@ export const getHomepageDataAction = async () => {
   }
 };
 
-export const getCategoriesAction = async () => {
+export const getHomeCategoriesAction = async () => {
   try {
     const res = await apiClient.get<APIRes<ICategory[]>>(
       API_ROUTES.HOME.CATEGORIES

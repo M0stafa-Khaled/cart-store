@@ -31,7 +31,9 @@ const ProductBasicInfo = ({ product }: ProductBaiscInfoProps) => {
           <label className="text-sm font-medium text-muted-foreground">
             Description
           </label>
-          <p className="text-sm leading-relaxed">{product.description}</p>
+          <pre className="text-sm font-sans leading-relaxed">
+            {product.description}
+          </pre>
         </div>
 
         <Separator />

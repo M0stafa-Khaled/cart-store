@@ -129,7 +129,7 @@ const ForgotPasswordPage = () => {
           </Button>
           <div className="flex items-center justify-center text-black/60 text-sm mt-2">
             <p>Remember your password? </p>
-            <Link href="/sign-in" className="text-main">
+            <Link href="/auth/sign-in" className="text-main">
               Sign In
             </Link>
           </div>

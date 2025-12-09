@@ -13,13 +13,13 @@ const ProductImages = ({ product }: { product: IProduct }) => {
 
   return (
     <div className="space-y-4">
-      <div className="relative aspect-square rounded-lg overflow-hidden bg-muted">
+      <div className="relative aspect-square rounded-lg overflow-hidden bg-white">
         <Image
           src={images[selectedImage] || "/product-placeholder.webp"}
           alt={product.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover"
+          className="object-contain object-center"
           priority
           loading="eager"
         />
@@ -39,7 +39,7 @@ const ProductImages = ({ product }: { product: IProduct }) => {
             <button
               key={index}
               onClick={() => setSelectedImage(index)}
-              className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+              className={`relative aspect-square rounded-lg overflow-hidden border-2 bg-white transition-all ${
                 selectedImage === index
                   ? "border-main"
                   : "border-transparent hover:border-gray-300"
@@ -50,7 +50,7 @@ const ProductImages = ({ product }: { product: IProduct }) => {
                 alt={`${product.title} ${index + 1}`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover"
+                className="object-contain object-center"
                 priority
                 loading="eager"
               />

@@ -26,6 +26,7 @@ import { formatEGPPrice } from "@/utils/formatPrice";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/utils/formatDate";
+import { truncateText } from "@/utils/truncateText";
 
 export const useProdctColumns = (): ColumnDef<IProduct>[] => {
   const router = useRouter();
@@ -71,15 +72,7 @@ export const useProdctColumns = (): ColumnDef<IProduct>[] => {
     {
       key: "title",
       header: "Title",
-      cell: (row) => row.title,
-    },
-    {
-      key: "description",
-      header: "Description",
-      cell: (row) =>
-        row.description.length > 50
-          ? row.description.slice(0, 50) + "..."
-          : row.description,
+      cell: (row) => truncateText(row.title, 50),
     },
     { key: "price", header: "Price", cell: (row) => formatEGPPrice(row.price) },
     { key: "stock", header: "Stock" },

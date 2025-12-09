@@ -13,7 +13,7 @@ interface FloatingPromoCardProps {
   gradientTo: string;
 }
 
-export function FloatingPromoCard({
+export const FloatingPromoCard = ({
   icon,
   title,
   description,
@@ -21,7 +21,7 @@ export function FloatingPromoCard({
   delay = 0,
   gradientFrom,
   gradientTo,
-}: FloatingPromoCardProps) {
+}: FloatingPromoCardProps) => {
   const positionClasses = {
     "top-right": "-top-12 -right-12",
     "bottom-left": "-bottom-12 -left-12",
@@ -58,4 +58,4 @@ export function FloatingPromoCard({
       </motion.div>
     </motion.div>
   );
-}
+};

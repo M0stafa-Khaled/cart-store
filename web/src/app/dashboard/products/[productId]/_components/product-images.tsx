@@ -21,13 +21,13 @@ const ProductImages = ({ product }: ProductImagesProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Main Image */}
-        <div className="relative aspect-video w-full overflow-hidden rounded-lg border bg-muted">
+        <div className="relative aspect-video w-full overflow-hidden rounded-lg border bg-white">
           <Image
             src={product.imageCover}
             alt={product.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
+            className="object-contain object-center"
             priority
           />
           {hasDiscount && (
@@ -47,14 +47,14 @@ const ProductImages = ({ product }: ProductImagesProps) => {
             {product.images.map((image, index) => (
               <div
                 key={index}
-                className="relative aspect-square max-w-[120px] overflow-hidden rounded-md border bg-muted hover:border-primary transition-colors cursor-pointer"
+                className="relative aspect-square overflow-hidden rounded-md border bg-white hover:border-primary transition-colors cursor-pointer"
               >
                 <Image
                   src={image || "/product-placeholder.webp"}
                   alt={`${product.title} - ${index + 1}`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover"
+                  className="object-contain object-center"
                 />
               </div>
             ))}

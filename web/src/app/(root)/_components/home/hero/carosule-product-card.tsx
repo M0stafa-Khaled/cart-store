@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import Image from "next/image";
 
 interface ProductCardProps {
   product: IProduct;
@@ -42,23 +43,15 @@ export const CarosuleProductCard = ({ product }: ProductCardProps) => {
       className="relative h-full w-full bg-white rounded-3xl shadow-2xl overflow-hidden group cursor-pointer"
     >
       <div className="relative h-3/4 overflow-hidden">
-        <motion.img
+        <Image
           src={product.imageCover}
           alt={product.title}
-          className="w-full h-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-contain object-center"
           loading="eager"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileHover={{ opacity: 1, y: 0 }}
-          className="absolute bottom-4 left-4 right-4"
-        >
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium rounded-full">
-            {product.category.name}
-          </span>
-        </motion.div>
       </div>
 
       <div className="p-6 space-y-3">
@@ -78,7 +71,7 @@ export const CarosuleProductCard = ({ product }: ProductCardProps) => {
           </span>
           <motion.button
             whileTap={{ scale: 0.9 }}
-            className="p-3 bg-linear-to-r from-main to-rose-600 text-white rounded-full shadow-lg hover:shadow-xl transition-shadow"
+            className="p-3 bg-linear-to-r from-main to-rose-600 text-white rounded-full shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
               handleAddToCart();

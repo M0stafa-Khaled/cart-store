@@ -80,9 +80,7 @@ const ProductDetailsContent = ({ product }: { product: IProduct }) => {
             <Badge variant="secondary">{product.brand.name}</Badge>
           )}
           {product.category && (
-            <Link
-              href={`/shop/products?category=${product.category.name}`}
-            >
+            <Link href={`/shop/products?category=${product.category.name}`}>
               <Badge
                 variant="outline"
                 className="hover:bg-accent cursor-pointer"
@@ -184,9 +182,9 @@ const ProductDetailsContent = ({ product }: { product: IProduct }) => {
 
       <div>
         <h3 className="font-semibold mb-2">Description</h3>
-        <p className="text-muted-foreground leading-relaxed">
+        <pre className="text-muted-foreground font-sans leading-relaxed text-wrap">
           {product.description}
-        </p>
+        </pre>
       </div>
     </div>
   );

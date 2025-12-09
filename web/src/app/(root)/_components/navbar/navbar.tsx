@@ -12,9 +12,9 @@ import { useWishList } from "@/hooks/use-wish-list";
 import UserMenu from "./user-menu";
 import MobileNavMenu from "./mobile-nav-menu";
 import { ICategory } from "@/interfaces";
-import { getAllCategoriesAction } from "@/actions/categories.actions";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductSearch from "@/components/shared/product-search";
+import { getHomeCategoriesAction } from "@/actions/homepage.actions";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,7 +29,7 @@ const Navbar = () => {
     (async () => {
       setIsLoadingCategories(true);
       try {
-        const categories = await getAllCategoriesAction({});
+        const categories = await getHomeCategoriesAction();
         if (!categories.success) return;
         setCategories(categories.data!);
         setIsLoadingCategories(false);
