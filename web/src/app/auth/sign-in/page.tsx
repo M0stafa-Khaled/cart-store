@@ -30,7 +30,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import {  useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Loader from "@/components/ui/loader";
 import { signInAction } from "@/actions/auth.actions";
@@ -54,7 +54,7 @@ const SignInPage = () => {
   const { update } = useSession();
 
   if (errorParam === "SessionExpired") {
-    errorParam = "Session expired, please sign in agian";
+    errorParam = "Session expired, please sign in again";
   }
 
   const messageParam = searchParams.get("message");
